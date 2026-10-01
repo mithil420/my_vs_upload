@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.55),
+                    rgba(0, 0, 0, 0.55)
+                ),
+                url("https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+
+            color: white;
+            padding: 25px 45px;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 100%;
+            max-width: 1250px;
+            margin: auto;
+
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            padding: 10px 5px 30px 5px;
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: white;
+            letter-spacing: -1px;
+        }
+
+        .logo span {
+            color: #ff5722;
+        }
+
+        .logo-icon {
+            color: #ff5722;
+            margin-right: 7px;
+        }
+
+        /* NAV LINKS */
+
+        .nav-links {
+            display: flex;
+            gap: 40px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 15px;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 7px;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background-color: #ff5722;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #ff7043;
+        }
+
+        /* NAV BUTTONS */
+
+        .nav-buttons {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+
+        .nav-signin {
+            text-decoration: none;
+            color: white;
+            border: 1px solid white;
+            padding: 11px 23px;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .nav-signin:hover {
+            background-color: white;
+            color: #333;
+        }
+
+        .nav-signup {
+            text-decoration: none;
+            color: white;
+            background-color: #ff5722;
+            padding: 12px 25px;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-signup:hover {
+            background-color: #e64a19;
+            transform: translateY(-2px);
+        }
+
+        /* ================= MAIN CARD ================= */
+
+        .main-card {
+            width: 100%;
+            max-width: 950px;
+            min-height: 545px;
+
+            margin: 35px auto 0 auto;
+
+            display: flex;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border-radius: 25px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.40);
+        }
+
+        /* ================= LEFT ================= */
+
+        .left-side {
+            width: 52%;
+
+            padding: 55px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+
+            color: #222;
+        }
+
+        .small-title {
+            font-size: 11px;
+            letter-spacing: 4px;
+            color: #ff5722;
+            font-weight: bold;
+            margin-bottom: 20px;
+        }
+
+        .meal-logo {
+            font-size: 39px;
+            font-weight: 800;
+            color: #ff5722;
+            margin-bottom: 8px;
+        }
+
+        .meal-logo span {
+            color: #222;
+        }
+
+        .tagline {
+            font-size: 17px;
+            color: #555;
+            margin-bottom: 22px;
+        }
+
+        h1 {
+            font-size: 48px;
+            line-height: 1.05;
+            color: #111;
+            margin-bottom: 23px;
+        }
+
+        h1 span {
+            color: #ff5722;
+        }
+
+        .description {
+            color: #666;
+            font-size: 15px;
+            line-height: 1.7;
+            max-width: 500px;
+            margin-bottom: 30px;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .buttons {
+            display: flex;
+            gap: 13px;
+        }
+
+        .btn {
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 30px;
+            font-size: 15px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .signup {
+            background-color: #ff5722;
+            color: white;
+
+            box-shadow:
+                0 10px 25px rgba(255, 87, 34, 0.25);
+        }
+
+        .signup:hover {
+            background-color: #e64a19;
+            transform: translateY(-3px);
+        }
+
+        .signin {
+            color: #ff5722;
+            border: 1.5px solid #ff5722;
+            background-color: white;
+        }
+
+        .signin:hover {
+            background-color: #ff5722;
+            color: white;
+            transform: translateY(-3px);
+        }
+
+        /* ================= FEATURES ================= */
+
+        .features {
+            display: flex;
+            gap: 25px;
+            margin-top: 38px;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .feature-icon {
+            width: 38px;
+            height: 38px;
+
+            border-radius: 50%;
+
+            background-color: #fff0e9;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            font-size: 18px;
+        }
+
+        .feature-text {
+            font-size: 11px;
+            color: #777;
+        }
+
+        .feature-text strong {
+            display: block;
+            color: #222;
+            font-size: 12px;
+            margin-bottom: 2px;
+        }
+
+        /* ================= RIGHT IMAGE ================= */
+
+        .right-side {
+            width: 48%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .food-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .image-overlay {
+            position: absolute;
+            inset: 0;
+
+            background:
+                linear-gradient(
+                    to top,
+                    rgba(0, 0, 0, 0.55),
+                    transparent 55%
+                );
+        }
+
+        /* FOOD LOVERS BADGE */
+
+        .top-badge {
+            position: absolute;
+
+            top: 20px;
+            right: 20px;
+
+            background: rgba(255,255,255,0.94);
+
+            color: #333;
+
+            padding: 9px 15px;
+
+            border-radius: 22px;
+
+            font-size: 11px;
+            font-weight: bold;
+        }
+
+        /* FOOD CARD */
+
+        .food-card {
+            position: absolute;
+
+            bottom: 25px;
+            left: 22px;
+            right: 22px;
+
+            padding: 17px;
+
+            background: rgba(255,255,255,0.94);
+
+            border-radius: 15px;
+
+            color: #222;
+
+            box-shadow:
+                0 10px 30px rgba(0,0,0,0.25);
+        }
+
+        .food-card-title {
+            font-size: 17px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        .food-card-text {
+            font-size: 12px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .rating {
+            margin-top: 6px;
+            color: #ff9800;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* ================= RESPONSIVE ================= */
+
+        @media (max-width: 900px) {
+
+            body {
+                padding: 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .main-card {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 700px) {
+
+            .main-card {
+                flex-direction: column;
+            }
+
+            .left-side {
+                width: 100%;
+                padding: 40px 30px;
+            }
+
+            .right-side {
+                width: 100%;
+                height: 380px;
+            }
+
+            h1 {
+                font-size: 38px;
+            }
+
+            .features {
+                flex-wrap: wrap;
+            }
+        }
+
+        @media (max-width: 450px) {
+
+            body {
+                padding: 15px;
+            }
+
+            .navbar {
+                padding-bottom: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .nav-signin {
+                display: none;
+            }
+
+            .nav-signup {
+                padding: 9px 16px;
+            }
+
+            .buttons {
+                flex-direction: column;
+            }
+
+            .btn {
+                text-align: center;
+            }
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+
+            <span class="logo-icon">🍴</span>
+
+            Meal <span>Mate</span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <!-- HOME -->
+
+            <a href="/">
+                Home
+            </a>
+
+
+            <!-- RESTAURANTS -->
+
+            <a href="/open_signin/">
+                Restaurants
+            </a>
+
+
+            <!-- ABOUT -->
+
+            <a href="{% url 'about' %}">
+                About
+            </a>
+
+
+            <!-- CONTACT -->
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+        </div>
+
+
+        <div class="nav-buttons">
+
+            <!-- SIGN IN -->
+
+            <a
+                href="/open_signin/"
+                class="nav-signin"
+            >
+                Sign In
+            </a>
+
+
+            <!-- SIGN UP -->
+
+            <a
+                href="/open_signup/"
+                class="nav-signup"
+            >
+                Sign Up
+            </a>
+
+        </div>
+
+    </nav>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="main-card">
+
+
+        <!-- LEFT SIDE -->
+
+        <div class="left-side">
+
+            <div class="small-title">
+                GOOD FOOD • GOOD MOOD
+            </div>
+
+
+            <div class="meal-logo">
+                Meal <span>Mate</span> 🍽️
+            </div>
+
+
+            <div class="tagline">
+                Your hunger mate!
+            </div>
+
+
+            <h1>
+                Good Food.<br>
+                <span>Better Moods.</span>
+            </h1>
+
+
+            <p class="description">
+
+                Discover delicious food, explore amazing
+                restaurants, and enjoy your favourite meals
+                with Meal Mate. Everything you love,
+                just a few clicks away.
+
+            </p>
+
+
+            <!-- BUTTONS -->
+
+            <div class="buttons">
+
+                <a
+                    href="/open_signup/"
+                    class="btn signup"
+                >
+                    Sign Up →
+                </a>
+
+
+                <a
+                    href="/open_signin/"
+                    class="btn signin"
+                >
+                    Sign In
+                </a>
+
+            </div>
+
+
+            <!-- FEATURES -->
+
+            <div class="features">
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        🍴
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Fresh Choices
+                        </strong>
+
+                        Delicious food
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ❤️
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Better Meals
+                        </strong>
+
+                        Made for you
+
+                    </div>
+
+                </div>
+
+
+                <div class="feature">
+
+                    <div class="feature-icon">
+                        ⭐
+                    </div>
+
+                    <div class="feature-text">
+
+                        <strong>
+                            Top Restaurants
+                        </strong>
+
+                        Quality food
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+        <!-- RIGHT SIDE -->
+
+        <div class="right-side">
+
+            <img
+                src="https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=1000&q=85"
+                alt="Delicious Food"
+                class="food-image"
+            >
+
+
+            <div class="image-overlay"></div>
+
+
+            <div class="top-badge">
+                🍴 Made for Food Lovers
+            </div>
+
+
+            <div class="food-card">
+
+                <div class="food-card-title">
+                    Fresh • Tasty • Delicious
+                </div>
+
+                <div class="food-card-text">
+
+                    Find your next favourite meal
+                    and make every bite memorable.
+
+                </div>
+
+                <div class="rating">
+                    ⭐ 4.9 / 5 Customer Choice
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

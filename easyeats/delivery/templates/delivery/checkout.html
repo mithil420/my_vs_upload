@@ -1,0 +1,2115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Meal Mate - Checkout</title>
+
+    <!-- ================= RAZORPAY ================= -->
+
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            color: #222;
+
+            background:
+                linear-gradient(
+                    rgba(255, 248, 243, 0.94),
+                    rgba(255, 243, 235, 0.94)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=90");
+
+            background-size: cover;
+
+            background-position: center;
+
+            background-attachment: fixed;
+
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+
+            width: 94%;
+
+            max-width: 1450px;
+
+            margin: 22px auto;
+
+            padding: 18px 28px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 25px;
+
+            background: rgba(255, 255, 255, 0.95);
+
+            border: 1px solid #eee;
+
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.08);
+
+        }
+
+        .logo {
+
+            font-size: 30px;
+
+            font-weight: 800;
+
+            color: #ff5a1f;
+
+            white-space: nowrap;
+
+        }
+
+        .logo span {
+
+            color: #222;
+
+        }
+
+        .nav-links {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 28px;
+
+        }
+
+        .nav-links a {
+
+            color: #444;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: 600;
+
+            position: relative;
+
+            padding-bottom: 5px;
+
+        }
+
+        .nav-links a::after {
+
+            content: "";
+
+            position: absolute;
+
+            left: 0;
+
+            bottom: 0;
+
+            width: 0;
+
+            height: 2px;
+
+            background: #ff5a1f;
+
+            transition: 0.3s;
+
+        }
+
+        .nav-links a:hover::after {
+
+            width: 100%;
+
+        }
+
+        .nav-links a:hover {
+
+            color: #ff5a1f;
+
+        }
+
+        .user-area {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+        }
+
+        .welcome {
+
+            font-size: 14px;
+
+            color: #666;
+
+        }
+
+        .welcome strong {
+
+            color: #ff5a1f;
+
+        }
+
+        /* ================= ORDER HISTORY BUTTON ================= */
+
+        .history-btn {
+
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            background: #fff0e8;
+
+            color: #ff5a1f;
+
+            text-decoration: none;
+
+            border: 1px solid #ffd5c3;
+
+            border-radius: 22px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+
+        }
+
+        .history-btn:hover {
+
+            background: #ff5a1f;
+
+            color: white;
+
+            border-color: #ff5a1f;
+
+            transform: translateY(-2px);
+
+        }
+
+        /* ================= LOGOUT BUTTON ================= */
+
+        .logout-btn {
+
+            display: inline-block;
+
+            padding: 10px 18px;
+
+            background: #333;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 22px;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+
+        }
+
+        .logout-btn:hover {
+
+            background: #ff5a1f;
+
+            transform: translateY(-2px);
+
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+
+            width: 94%;
+
+            max-width: 1200px;
+
+            margin: 45px auto 70px;
+
+        }
+
+        .title {
+
+            text-align: center;
+
+            margin-bottom: 35px;
+
+        }
+
+        .badge {
+
+            display: inline-block;
+
+            padding: 8px 18px;
+
+            border-radius: 25px;
+
+            background: #fff0e8;
+
+            color: #ff5a1f;
+
+            font-size: 13px;
+
+            font-weight: bold;
+
+            margin-bottom: 15px;
+
+        }
+
+        .title h1 {
+
+            margin: 0;
+
+            font-size: 44px;
+
+            color: #222;
+
+        }
+
+        .title h1 span {
+
+            color: #ff5a1f;
+
+        }
+
+        .title p {
+
+            color: #777;
+
+            font-size: 16px;
+
+            margin-top: 10px;
+
+        }
+
+        /* ================= CHECKOUT GRID ================= */
+
+        .checkout-grid {
+
+            display: grid;
+
+            grid-template-columns: 1.4fr 0.9fr;
+
+            gap: 28px;
+
+        }
+
+        .card {
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border: 1px solid #eee;
+
+            border-radius: 22px;
+
+            padding: 30px;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.09);
+
+        }
+
+        .card-title {
+
+            margin: 0 0 25px;
+
+            font-size: 23px;
+
+            color: #222;
+
+        }
+
+        .card-title span {
+
+            color: #ff5a1f;
+
+        }
+
+        /* ================= FORM ================= */
+
+        .form-group {
+
+            margin-bottom: 20px;
+
+        }
+
+        .form-group label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            color: #444;
+
+        }
+
+        .form-group input,
+
+        .form-group textarea {
+
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 11px;
+
+            outline: none;
+
+            font-family: Arial, sans-serif;
+
+            font-size: 14px;
+
+            transition: 0.25s;
+
+        }
+
+        .form-group textarea {
+
+            min-height: 110px;
+
+            resize: vertical;
+
+        }
+
+        .form-group input:focus,
+
+        .form-group textarea:focus {
+
+            border-color: #ff5a1f;
+
+            box-shadow:
+                0 0 0 3px rgba(255, 90, 31, 0.10);
+
+        }
+
+        /* ================= LOCATION ================= */
+
+        .location-row {
+
+            display: flex;
+
+            gap: 10px;
+
+            align-items: stretch;
+
+        }
+
+        .location-row textarea {
+
+            flex: 1;
+
+        }
+
+        .location-btn {
+
+            min-width: 190px;
+
+            border: none;
+
+            border-radius: 11px;
+
+            background: #ff5a1f;
+
+            color: white;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            padding: 12px 16px;
+
+            transition: 0.25s;
+
+        }
+
+        .location-btn:hover {
+
+            background: #e54812;
+
+            transform: translateY(-1px);
+
+        }
+
+        .location-status {
+
+            margin-top: 8px;
+
+            font-size: 13px;
+
+            color: #777;
+
+            min-height: 18px;
+
+        }
+
+        /* ================= MAP MODAL ================= */
+
+        .map-overlay {
+
+            display: none;
+
+            position: fixed;
+
+            top: 0;
+
+            left: 0;
+
+            width: 100%;
+
+            height: 100%;
+
+            background: rgba(0, 0, 0, 0.70);
+
+            z-index: 9999;
+
+            align-items: center;
+
+            justify-content: center;
+
+            padding: 20px;
+
+        }
+
+        .map-box {
+
+            width: 100%;
+
+            max-width: 950px;
+
+            background: white;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 25px 80px rgba(0, 0, 0, 0.30);
+
+        }
+
+        .map-header {
+
+            padding: 18px 22px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+        .map-header h3 {
+
+            margin: 0;
+
+            font-size: 20px;
+
+        }
+
+        .map-header h3 span {
+
+            color: #ff5a1f;
+
+        }
+
+        .close-map {
+
+            border: none;
+
+            background: #f3f3f3;
+
+            width: 38px;
+
+            height: 38px;
+
+            border-radius: 50%;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+        }
+
+        .close-map:hover {
+
+            background: #ff5a1f;
+
+            color: white;
+
+        }
+
+        .google-map {
+
+            width: 100%;
+
+            height: 480px;
+
+            border: 0;
+
+            display: block;
+
+        }
+
+        .map-loading {
+
+            width: 100%;
+
+            height: 480px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f7f7f7;
+
+            color: #777;
+
+            font-size: 16px;
+
+        }
+
+        .map-footer {
+
+            padding: 18px 22px;
+
+            background: white;
+
+        }
+
+        .map-address {
+
+            margin-bottom: 14px;
+
+            padding: 12px 15px;
+
+            background: #fff8f4;
+
+            border: 1px solid #ffe0d2;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            color: #555;
+
+            line-height: 1.5;
+
+        }
+
+        .coordinates {
+
+            margin-top: 7px;
+
+            color: #999;
+
+            font-size: 12px;
+
+        }
+
+        .map-buttons {
+
+            display: flex;
+
+            gap: 10px;
+
+        }
+
+        .confirm-location {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 10px;
+
+            background: #ff5a1f;
+
+            color: white;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+        .confirm-location:hover {
+
+            background: #e54812;
+
+        }
+
+        .cancel-location {
+
+            padding: 14px 25px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            background: white;
+
+            color: #555;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+        .cancel-location:hover {
+
+            background: #f5f5f5;
+
+        }
+
+        /* ================= ORDER ITEMS ================= */
+
+        .order-item {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 15px 0;
+
+            border-bottom: 1px solid #eee;
+
+        }
+
+        .order-item:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .food-image {
+
+            width: 70px;
+
+            height: 60px;
+
+            border-radius: 11px;
+
+            object-fit: cover;
+
+            flex-shrink: 0;
+
+        }
+
+        .food-info {
+
+            flex: 1;
+
+        }
+
+        .food-name {
+
+            font-weight: bold;
+
+            font-size: 15px;
+
+            color: #222;
+
+        }
+
+        .food-quantity {
+
+            margin-top: 5px;
+
+            color: #777;
+
+            font-size: 13px;
+
+        }
+
+        .food-price {
+
+            font-weight: bold;
+
+            color: #ff5a1f;
+
+            white-space: nowrap;
+
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            padding: 10px 0;
+
+            color: #666;
+
+            font-size: 15px;
+
+        }
+
+        .summary-row.total {
+
+            margin-top: 12px;
+
+            padding-top: 18px;
+
+            border-top: 1px solid #ddd;
+
+            color: #222;
+
+            font-size: 21px;
+
+            font-weight: 800;
+
+        }
+
+        .summary-row.total span:last-child {
+
+            color: #ff5a1f;
+
+        }
+
+        /* ================= PAYMENT ================= */
+
+        .payment-box {
+
+            margin-top: 25px;
+
+            padding: 18px;
+
+            background: #fff8f4;
+
+            border: 1px solid #ffe0d2;
+
+            border-radius: 14px;
+
+        }
+
+        .payment-title {
+
+            font-weight: bold;
+
+            margin-bottom: 14px;
+
+            color: #333;
+
+            font-size: 17px;
+
+        }
+
+        .payment-option {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            padding: 14px;
+
+            margin-top: 10px;
+
+            background: white;
+
+            border: 1px solid #ddd;
+
+            border-radius: 11px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+
+        }
+
+        .payment-option:hover {
+
+            border-color: #ff5a1f;
+
+            background: #fffaf7;
+
+        }
+
+        .payment-option input {
+
+            width: 18px;
+
+            height: 18px;
+
+            accent-color: #ff5a1f;
+
+        }
+
+        .payment-icon {
+
+            font-size: 23px;
+
+        }
+
+        .payment-info {
+
+            flex: 1;
+
+        }
+
+        .payment-name {
+
+            font-weight: bold;
+
+            color: #222;
+
+            font-size: 14px;
+
+        }
+
+        .payment-description {
+
+            color: #888;
+
+            font-size: 12px;
+
+            margin-top: 4px;
+
+        }
+
+        /* ================= PLACE ORDER ================= */
+
+        .place-order-btn {
+
+            width: 100%;
+
+            margin-top: 25px;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 12px;
+
+            background: #ff5a1f;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            box-shadow:
+                0 10px 25px rgba(255, 90, 31, 0.25);
+
+            transition: 0.25s;
+
+        }
+
+        .place-order-btn:hover {
+
+            background: #e54812;
+
+            transform: translateY(-2px);
+
+        }
+
+        .place-order-btn:disabled {
+
+            background: #aaa;
+
+            cursor: not-allowed;
+
+            transform: none;
+
+            box-shadow: none;
+
+        }
+
+        .back-cart {
+
+            display: block;
+
+            text-align: center;
+
+            margin-top: 15px;
+
+            color: #666;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+        }
+
+        .back-cart:hover {
+
+            color: #ff5a1f;
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 900px) {
+
+            .checkout-grid {
+
+                grid-template-columns: 1fr;
+
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .nav-links {
+
+                display: none;
+
+            }
+
+            .header {
+
+                width: 95%;
+
+                padding: 16px;
+
+            }
+
+            .logo {
+
+                font-size: 25px;
+
+            }
+
+            .welcome {
+
+                display: none;
+
+            }
+
+            .container {
+
+                width: 95%;
+
+            }
+
+            .title h1 {
+
+                font-size: 34px;
+
+            }
+
+            .card {
+
+                padding: 22px;
+
+            }
+
+            .location-row {
+
+                flex-direction: column;
+
+            }
+
+            .location-btn {
+
+                width: 100%;
+
+                min-height: 48px;
+
+            }
+
+            .google-map,
+
+            .map-loading {
+
+                height: 400px;
+
+            }
+
+            .map-buttons {
+
+                flex-direction: column;
+
+            }
+
+            .history-btn {
+
+                padding: 9px 13px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div class="logo">
+
+            Meal <span>Mate</span> 🍽️
+
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">Home</a>
+
+            <a href="{% url 'about' %}">About</a>
+
+            <a href="{% url 'contact' %}">Contact</a>
+
+            <a href="{% url 'cart' username %}">🛒 Cart</a>
+
+            <a href="{% url 'order_history' username %}">
+                📦 Order History
+            </a>
+
+        </div>
+
+        <div class="user-area">
+
+            <div class="welcome">
+
+                Welcome,
+
+                <strong>{{ username }}</strong>
+
+            </div>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+        <div class="title">
+
+            <div class="badge">
+
+                🔒 SECURE CHECKOUT
+
+            </div>
+
+            <h1>
+
+                Complete Your
+                <span>Order</span>
+
+            </h1>
+
+            <p>
+
+                Almost there! Confirm your delivery details and place your order.
+
+            </p>
+
+        </div>
+
+        <form
+            id="checkoutForm"
+            method="POST"
+            action="{% url 'place_order' username %}"
+        >
+
+            {% csrf_token %}
+
+            <div class="checkout-grid">
+
+                <!-- ================= DELIVERY DETAILS ================= -->
+
+                <div class="card">
+
+                    <h2 class="card-title">
+
+                        📍 Delivery
+                        <span>Details</span>
+
+                    </h2>
+
+                    <div class="form-group">
+
+                        <label>
+                            Customer Name
+                        </label>
+
+                        <input
+                            type="text"
+                            value="{{ customer.username }}"
+                            readonly
+                        >
+
+                    </div>
+
+                    <div class="form-group">
+
+                        <label>
+                            Mobile Number
+                        </label>
+
+                        <input
+                            type="tel"
+                            name="mobile"
+                            value="{{ customer.mobile }}"
+                            maxlength="10"
+                            required
+                        >
+
+                    </div>
+
+                    <!-- ================= DELIVERY LOCATION ================= -->
+
+                    <div class="form-group">
+
+                        <label>
+                            Delivery Address
+                        </label>
+
+                        <div class="location-row">
+
+                            <textarea
+                                id="address"
+                                name="address"
+                                required
+                                placeholder="Select your delivery location..."
+                            >{{ customer.address }}</textarea>
+
+                            <button
+                                type="button"
+                                class="location-btn"
+                                onclick="openLocationMap()"
+                            >
+                                📍 Use Current Location
+                            </button>
+
+                        </div>
+
+                        <div
+                            id="locationStatus"
+                            class="location-status"
+                        >
+                            Click "Use Current Location" to select your exact delivery location.
+                        </div>
+
+                    </div>
+
+                    <!-- ================= PAYMENT METHODS ================= -->
+
+                    <div class="payment-box">
+
+                        <div class="payment-title">
+
+                            💳 Payment Method
+
+                        </div>
+
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment_method"
+                                value="cod"
+                                checked
+                            >
+
+                            <div class="payment-icon">
+                                💵
+                            </div>
+
+                            <div class="payment-info">
+
+                                <div class="payment-name">
+                                    Cash on Delivery
+                                </div>
+
+                                <div class="payment-description">
+                                    Pay when your order arrives at your doorstep.
+                                </div>
+
+                            </div>
+
+                        </label>
+
+                        <label class="payment-option">
+
+                            <input
+                                type="radio"
+                                name="payment_method"
+                                value="razorpay"
+                            >
+
+                            <div class="payment-icon">
+                                💳
+                            </div>
+
+                            <div class="payment-info">
+
+                                <div class="payment-name">
+                                    Razorpay
+                                </div>
+
+                                <div class="payment-description">
+                                    Pay securely using UPI, cards or net banking.
+                                </div>
+
+                            </div>
+
+                        </label>
+
+                    </div>
+
+                </div>
+
+                <!-- ================= ORDER SUMMARY ================= -->
+
+                <div class="card">
+
+                    <h2 class="card-title">
+
+                        🛒 Order
+                        <span>Summary</span>
+
+                    </h2>
+
+                    {% for item in menuList %}
+
+                    <div class="order-item">
+
+                        {% if item.menu.picture %}
+
+                        <img
+                            src="{{ item.menu.picture }}"
+                            alt="{{ item.menu.food_name }}"
+                            class="food-image"
+                        >
+
+                        {% else %}
+
+                        <div
+                            class="food-image"
+                            style="
+                                background:#f4f4f4;
+                                display:flex;
+                                align-items:center;
+                                justify-content:center;
+                            "
+                        >
+                            🍽️
+                        </div>
+
+                        {% endif %}
+
+                        <div class="food-info">
+
+                            <div class="food-name">
+
+                                {{ item.menu.food_name }}
+
+                            </div>
+
+                            <div class="food-quantity">
+
+                                Quantity: {{ item.quantity }}
+
+                            </div>
+
+                        </div>
+
+                        <div class="food-price">
+
+                            ₹{{ item.item_total }}
+
+                        </div>
+
+                    </div>
+
+                    {% endfor %}
+
+                    <div class="summary-row">
+
+                        <span>
+                            Subtotal
+                        </span>
+
+                        <span>
+                            ₹{{ total }}
+                        </span>
+
+                    </div>
+
+                    <div class="summary-row">
+
+                        <span>
+                            Delivery Fee
+                        </span>
+
+                        <span>
+                            ₹0
+                        </span>
+
+                    </div>
+
+                    <div class="summary-row total">
+
+                        <span>
+                            Grand Total
+                        </span>
+
+                        <span>
+                            ₹{{ total }}
+                        </span>
+
+                    </div>
+
+                    <button
+                        type="submit"
+                        id="placeOrderButton"
+                        class="place-order-btn"
+                    >
+
+                        Place Order →
+
+                    </button>
+
+                    <a
+                        href="{% url 'cart' username %}"
+                        class="back-cart"
+                    >
+
+                        ← Back to Cart
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </form>
+
+    </div>
+
+    <!-- ================= MAP MODAL ================= -->
+
+    <div
+        id="mapOverlay"
+        class="map-overlay"
+    >
+
+        <div class="map-box">
+
+            <div class="map-header">
+
+                <h3>
+
+                    📍 Select Your
+                    <span>Location</span>
+
+                </h3>
+
+                <button
+                    type="button"
+                    class="close-map"
+                    onclick="closeLocationMap()"
+                >
+                    ×
+                </button>
+
+            </div>
+
+            <div
+                id="mapLoading"
+                class="map-loading"
+            >
+
+                📍 Getting your current location...
+
+            </div>
+
+            <iframe
+                id="googleMap"
+                class="google-map"
+                style="display:none;"
+                loading="lazy"
+                allowfullscreen
+                referrerpolicy="no-referrer-when-downgrade"
+            >
+            </iframe>
+
+            <div class="map-footer">
+
+                <div
+                    id="mapAddress"
+                    class="map-address"
+                >
+
+                    Detecting your current location...
+
+                    <div
+                        id="coordinates"
+                        class="coordinates"
+                    >
+                    </div>
+
+                </div>
+
+                <div class="map-buttons">
+
+                    <button
+                        type="button"
+                        class="cancel-location"
+                        onclick="closeLocationMap()"
+                    >
+
+                        Cancel
+
+                    </button>
+
+                    <button
+                        type="button"
+                        class="confirm-location"
+                        onclick="confirmLocation()"
+                    >
+
+                        ✓ Confirm This Location
+
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ================= LOCATION SCRIPT ================= -->
+
+    <script>
+
+        let currentLatitude = null;
+
+        let currentLongitude = null;
+
+        let currentAddress = "";
+
+        /* ================= OPEN LOCATION MAP ================= */
+
+        function openLocationMap() {
+
+            const overlay =
+                document.getElementById("mapOverlay");
+
+            const loading =
+                document.getElementById("mapLoading");
+
+            const googleMap =
+                document.getElementById("googleMap");
+
+            const mapAddress =
+                document.getElementById("mapAddress");
+
+            const coordinates =
+                document.getElementById("coordinates");
+
+            const status =
+                document.getElementById("locationStatus");
+
+            overlay.style.display = "flex";
+
+            loading.style.display = "flex";
+
+            googleMap.style.display = "none";
+
+            mapAddress.innerHTML =
+                "📍 Getting your exact current location...";
+
+            coordinates.innerHTML = "";
+
+            status.innerHTML =
+                "📍 Getting your exact current location...";
+
+            currentAddress = "";
+
+            if (!navigator.geolocation) {
+
+                loading.innerHTML =
+                    "❌ Location is not supported by this browser.";
+
+                return;
+
+            }
+
+            navigator.geolocation.getCurrentPosition(
+
+                function(position) {
+
+                    currentLatitude =
+                        position.coords.latitude;
+
+                    currentLongitude =
+                        position.coords.longitude;
+
+                    const googleMapUrl =
+                        "https://www.google.com/maps"
+                        + "?q="
+                        + currentLatitude
+                        + ","
+                        + currentLongitude
+                        + "&z=18"
+                        + "&output=embed";
+
+                    googleMap.src =
+                        googleMapUrl;
+
+                    loading.style.display =
+                        "none";
+
+                    googleMap.style.display =
+                        "block";
+
+                    coordinates.innerHTML =
+                        "Latitude: "
+                        + currentLatitude.toFixed(6)
+                        + " | Longitude: "
+                        + currentLongitude.toFixed(6);
+
+                    status.innerHTML =
+                        "📍 Current location detected successfully.";
+
+                    getAddress(
+                        currentLatitude,
+                        currentLongitude
+                    );
+
+                },
+
+                function(error) {
+
+                    loading.style.display =
+                        "flex";
+
+                    googleMap.style.display =
+                        "none";
+
+                    let message =
+                        "❌ Unable to detect your location.";
+
+                    if (error.code === 1) {
+
+                        message =
+                            "❌ Location permission denied. Please allow location access.";
+
+                    }
+
+                    else if (error.code === 2) {
+
+                        message =
+                            "❌ Current location could not be determined.";
+
+                    }
+
+                    else if (error.code === 3) {
+
+                        message =
+                            "❌ Location request timed out. Please try again.";
+
+                    }
+
+                    loading.innerHTML =
+                        message;
+
+                    mapAddress.innerHTML =
+                        message;
+
+                    status.innerHTML =
+                        message;
+
+                },
+
+                {
+                    enableHighAccuracy: true,
+                    timeout: 15000,
+                    maximumAge: 0
+                }
+
+            );
+
+        }
+
+        /* ================= GET ADDRESS ================= */
+
+        function getAddress(latitude, longitude) {
+
+            const mapAddress =
+                document.getElementById("mapAddress");
+
+            mapAddress.innerHTML =
+                "📍 Finding your address...";
+
+            const url =
+                "https://nominatim.openstreetmap.org/reverse"
+                + "?format=json"
+                + "&lat=" + latitude
+                + "&lon=" + longitude
+                + "&zoom=18"
+                + "&addressdetails=1";
+
+            fetch(url)
+
+                .then(function(response) {
+
+                    return response.json();
+
+                })
+
+                .then(function(data) {
+
+                    if (data.display_name) {
+
+                        currentAddress =
+                            data.display_name;
+
+                        mapAddress.innerHTML =
+                            "📍 "
+                            + currentAddress;
+
+                    }
+
+                    else {
+
+                        currentAddress =
+                            "Latitude: "
+                            + latitude
+                            + ", Longitude: "
+                            + longitude;
+
+                        mapAddress.innerHTML =
+                            "📍 Location detected.";
+
+                    }
+
+                })
+
+                .catch(function(error) {
+
+                    console.error(error);
+
+                    currentAddress =
+                        "Latitude: "
+                        + latitude
+                        + ", Longitude: "
+                        + longitude;
+
+                    mapAddress.innerHTML =
+                        "📍 Current location detected.";
+
+                });
+
+        }
+
+        /* ================= CONFIRM LOCATION ================= */
+
+        function confirmLocation() {
+
+            const addressBox =
+                document.getElementById("address");
+
+            const status =
+                document.getElementById("locationStatus");
+
+            if (
+                currentLatitude === null ||
+                currentLongitude === null
+            ) {
+
+                alert(
+                    "Please wait until your current location is detected."
+                );
+
+                return;
+
+            }
+
+            if (!currentAddress) {
+
+                alert(
+                    "Please wait until the address is loaded."
+                );
+
+                return;
+
+            }
+
+            addressBox.value =
+                currentAddress;
+
+            status.innerHTML =
+                "✅ Exact current location selected successfully.";
+
+            closeLocationMap();
+
+        }
+
+        /* ================= CLOSE MAP ================= */
+
+        function closeLocationMap() {
+
+            document.getElementById(
+                "mapOverlay"
+            ).style.display = "none";
+
+        }
+
+        /* =========================================================
+           RAZORPAY PAYMENT
+        ========================================================= */
+
+        const checkoutForm =
+            document.getElementById("checkoutForm");
+
+        const placeOrderButton =
+            document.getElementById("placeOrderButton");
+
+        checkoutForm.addEventListener(
+            "submit",
+            function(event) {
+
+                const selectedPayment =
+                    document.querySelector(
+                        'input[name="payment_method"]:checked'
+                    );
+
+                if (!selectedPayment) {
+
+                    alert(
+                        "Please select a payment method."
+                    );
+
+                    event.preventDefault();
+
+                    return;
+
+                }
+
+                const paymentMethod =
+                    selectedPayment.value;
+
+                if (paymentMethod === "cod") {
+
+                    return;
+
+                }
+
+                event.preventDefault();
+
+                startRazorpayPayment();
+
+            }
+        );
+
+        /* ================= START RAZORPAY ================= */
+
+        function startRazorpayPayment() {
+
+            placeOrderButton.disabled = true;
+
+            placeOrderButton.innerHTML =
+                "Opening Razorpay...";
+
+            const createOrderUrl =
+                "{% url 'create_razorpay_order' username %}";
+
+            fetch(
+                createOrderUrl,
+                {
+                    method: "POST",
+
+                    headers: {
+                        "X-CSRFToken":
+                            document.querySelector(
+                                '[name=csrfmiddlewaretoken]'
+                            ).value,
+
+                        "Content-Type":
+                            "application/json"
+                    }
+                }
+            )
+
+            .then(function(response) {
+
+                return response.json();
+
+            })
+
+            .then(function(data) {
+
+                if (data.error) {
+
+                    throw new Error(
+                        data.error
+                    );
+
+                }
+
+                const options = {
+
+                    key: data.key_id,
+
+                    amount: data.amount,
+
+                    currency: data.currency,
+
+                    name: "Meal Mate",
+
+                    description:
+                        "Food Order Payment",
+
+                    order_id:
+                        data.order_id,
+
+                    prefill: {
+
+                        name:
+                            "{{ customer.username }}",
+
+                        email:
+                            "{{ customer.email }}",
+
+                        contact:
+                            "{{ customer.mobile }}"
+
+                    },
+
+                    theme: {
+
+                        color: "#ff5a1f"
+
+                    },
+
+                    handler:
+                        function(response) {
+
+                            submitRazorpayOrder(
+                                response,
+                                data.order_id
+                            );
+
+                        },
+
+                    modal: {
+
+                        ondismiss:
+                            function() {
+
+                                placeOrderButton.disabled =
+                                    false;
+
+                                placeOrderButton.innerHTML =
+                                    "Place Order →";
+
+                            }
+
+                    }
+
+                };
+
+                const razorpay =
+                    new Razorpay(options);
+
+                razorpay.on(
+                    "payment.failed",
+                    function(response) {
+
+                        alert(
+                            "Payment failed. Please try again."
+                        );
+
+                        console.error(
+                            response.error
+                        );
+
+                        placeOrderButton.disabled =
+                            false;
+
+                        placeOrderButton.innerHTML =
+                            "Place Order →";
+
+                    }
+                );
+
+                razorpay.open();
+
+            })
+
+            .catch(function(error) {
+
+                console.error(error);
+
+                alert(
+                    "Unable to start Razorpay payment."
+                );
+
+                placeOrderButton.disabled =
+                    false;
+
+                placeOrderButton.innerHTML =
+                    "Place Order →";
+
+            });
+
+        }
+
+        /* ================= SUBMIT RAZORPAY ORDER ================= */
+
+        function submitRazorpayOrder(
+            response,
+            razorpayOrderId
+        ) {
+
+            const form =
+                document.getElementById("checkoutForm");
+
+            const paymentMethod =
+                document.createElement("input");
+
+            paymentMethod.type =
+                "hidden";
+
+            paymentMethod.name =
+                "payment_method";
+
+            paymentMethod.value =
+                "razorpay";
+
+            form.appendChild(
+                paymentMethod
+            );
+
+            const paymentId =
+                document.createElement("input");
+
+            paymentId.type =
+                "hidden";
+
+            paymentId.name =
+                "razorpay_payment_id";
+
+            paymentId.value =
+                response.razorpay_payment_id;
+
+            form.appendChild(
+                paymentId
+            );
+
+            const orderId =
+                document.createElement("input");
+
+            orderId.type =
+                "hidden";
+
+            orderId.name =
+                "razorpay_order_id";
+
+            orderId.value =
+                razorpayOrderId;
+
+            form.appendChild(
+                orderId
+            );
+
+            const signature =
+                document.createElement("input");
+
+            signature.type =
+                "hidden";
+
+            signature.name =
+                "razorpay_signature";
+
+            signature.value =
+                response.razorpay_signature;
+
+            form.appendChild(
+                signature
+            );
+
+            placeOrderButton.disabled =
+                true;
+
+            placeOrderButton.innerHTML =
+                "Processing Order...";
+
+            form.submit();
+
+        }
+
+    </script>
+
+</body>
+
+</html>

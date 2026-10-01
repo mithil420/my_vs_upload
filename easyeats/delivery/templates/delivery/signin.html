@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate - Sign In</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.45)
+                ),
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .signin-container {
+            width: 100%;
+            max-width: 850px;
+
+            display: flex;
+
+            background: white;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* LEFT IMAGE */
+
+        .image-section {
+            width: 45%;
+
+            background-image:
+                url("https://images.unsplash.com/photo-1547592180-85f173990554");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+
+        /* RIGHT FORM */
+
+        .form-section {
+            width: 55%;
+
+            padding: 60px 50px;
+
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .logo {
+            text-align: center;
+
+            color: #ff5a1f;
+
+            font-size: 40px;
+
+            margin-bottom: 8px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #777;
+
+            margin-bottom: 35px;
+        }
+
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+            color: #333;
+        }
+
+        input {
+            width: 100%;
+
+            padding: 13px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 7px;
+
+            font-size: 15px;
+
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ff5a1f;
+
+            box-shadow: 0 0 5px rgba(255, 90, 31, 0.2);
+        }
+
+
+        .signin-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            background-color: #ff5a1f;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .signin-btn:hover {
+            background-color: #e64a12;
+        }
+
+
+        .signup-link {
+            text-align: center;
+
+            margin-top: 25px;
+
+            color: #777;
+        }
+
+        .signup-link a {
+            color: #ff5a1f;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .signin-container {
+                flex-direction: column;
+            }
+
+            .image-section {
+                width: 100%;
+                height: 220px;
+            }
+
+            .form-section {
+                width: 100%;
+                padding: 40px 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="signin-container">
+
+
+        <!-- FOOD IMAGE -->
+
+        <div class="image-section">
+        </div>
+
+
+        <!-- SIGN IN FORM -->
+
+        <div class="form-section">
+
+            <h1 class="logo">
+                Meal Mate
+            </h1>
+
+            <p class="subtitle">
+                Welcome back! 🍽️
+            </p>
+
+
+            <form method="POST" action="/signin">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="signin-btn"
+                >
+                    Sign In
+                </button>
+
+            </form>
+
+
+            <div class="signup-link">
+
+                Don't have an account?
+
+                <a href="/open_signup/">
+                    Create Account
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

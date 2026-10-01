@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Meal Mate - Order Successful</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+
+            margin: 0;
+
+            min-height: 100vh;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            font-family: Arial, sans-serif;
+
+            background:
+                linear-gradient(
+                    rgba(255, 248, 243, 0.95),
+                    rgba(255, 243, 235, 0.95)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=90");
+
+            background-size: cover;
+
+            background-position: center;
+
+            padding: 25px;
+
+        }
+
+        .success-card {
+
+            width: 100%;
+
+            max-width: 650px;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border-radius: 25px;
+
+            padding: 45px;
+
+            text-align: center;
+
+            box-shadow:
+                0 25px 70px rgba(0, 0, 0, 0.15);
+
+        }
+
+        .success-icon {
+
+            width: 90px;
+
+            height: 90px;
+
+            margin: 0 auto 25px;
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            border-radius: 50%;
+
+            background: #e8f8ef;
+
+            font-size: 45px;
+
+        }
+
+        h1 {
+
+            margin: 0;
+
+            font-size: 34px;
+
+            color: #222;
+
+        }
+
+        h1 span {
+
+            color: #ff5a1f;
+
+        }
+
+        .message {
+
+            margin-top: 15px;
+
+            color: #777;
+
+            font-size: 16px;
+
+            line-height: 1.6;
+
+        }
+
+        .order-box {
+
+            margin-top: 30px;
+
+            padding: 22px;
+
+            background: #fff8f4;
+
+            border: 1px solid #ffe0d2;
+
+            border-radius: 15px;
+
+            text-align: left;
+
+        }
+
+        .order-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 10px 0;
+
+            border-bottom: 1px solid #eee;
+
+            font-size: 14px;
+
+        }
+
+        .order-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+        .order-label {
+
+            color: #777;
+
+        }
+
+        .order-value {
+
+            font-weight: bold;
+
+            color: #222;
+
+            text-align: right;
+
+        }
+
+        .paid {
+
+            color: #168a4a;
+
+        }
+
+        .pending {
+
+            color: #e67e22;
+
+        }
+
+        .buttons {
+
+            margin-top: 30px;
+
+            display: flex;
+
+            gap: 12px;
+
+        }
+
+        .btn {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border-radius: 11px;
+
+            text-decoration: none;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            transition: 0.2s;
+
+        }
+
+        .home-btn {
+
+            background: #ff5a1f;
+
+            color: white;
+
+        }
+
+        .home-btn:hover {
+
+            background: #e54812;
+
+            transform: translateY(-1px);
+
+        }
+
+        .orders-btn {
+
+            background: #333;
+
+            color: white;
+
+        }
+
+        .orders-btn:hover {
+
+            background: #222;
+
+            transform: translateY(-1px);
+
+        }
+
+        @media (max-width: 600px) {
+
+            .success-card {
+
+                padding: 30px 22px;
+
+            }
+
+            h1 {
+
+                font-size: 28px;
+
+            }
+
+            .buttons {
+
+                flex-direction: column;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <div class="success-card">
+
+        <div class="success-icon">
+            ✓
+        </div>
+
+        <h1>
+
+            Order <span>Placed Successfully!</span>
+
+        </h1>
+
+        <div class="message">
+
+            Thank you for ordering with Meal Mate,
+            <strong>{{ username }}</strong>!
+
+            <br>
+
+            Your delicious food is being prepared.
+
+        </div>
+
+        <div class="order-box">
+
+            <div class="order-row">
+
+                <span class="order-label">
+                    Order ID
+                </span>
+
+                <span class="order-value">
+                    #{{ order.id }}
+                </span>
+
+            </div>
+
+            <div class="order-row">
+
+                <span class="order-label">
+                    Payment Method
+                </span>
+
+                <span class="order-value">
+                    {{ order.payment_method }}
+                </span>
+
+            </div>
+
+            <div class="order-row">
+
+                <span class="order-label">
+                    Payment Status
+                </span>
+
+                <span
+                    class="order-value
+                    {% if order.status == 'Paid' %}
+                        paid
+                    {% else %}
+                        pending
+                    {% endif %}"
+                >
+
+                    {% if order.status == 'Paid' %}
+
+                        ✓ Paid
+
+                    {% else %}
+
+                        ⏳ Pending / Cash on Delivery
+
+                    {% endif %}
+
+                </span>
+
+            </div>
+
+            <div class="order-row">
+
+                <span class="order-label">
+                    Total Amount
+                </span>
+
+                <span class="order-value">
+                    ₹{{ order.total_amount }}
+                </span>
+
+            </div>
+
+            <div class="order-row">
+
+                <span class="order-label">
+                    Delivery Address
+                </span>
+
+                <span class="order-value">
+                    {{ order.address }}
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="buttons">
+
+            <a
+                href="{% url 'index' %}"
+                class="btn home-btn"
+            >
+                🏠 Back to Home
+            </a>
+
+            <a
+                href="{% url 'cart' username %}"
+                class="btn orders-btn"
+            >
+                🛒 Continue Shopping
+            </a>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

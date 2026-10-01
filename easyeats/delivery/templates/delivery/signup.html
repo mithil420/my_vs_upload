@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate - Sign Up</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.45)
+                ),
+                url("https://images.unsplash.com/photo-1504674900247-0877df9cc836");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .signup-container {
+            width: 100%;
+            max-width: 850px;
+
+            display: flex;
+
+            background: white;
+
+            border-radius: 20px;
+
+            overflow: hidden;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+        }
+
+
+        /* LEFT IMAGE */
+
+        .image-section {
+            width: 40%;
+
+            background-image:
+                url("https://images.unsplash.com/photo-1547592180-85f173990554");
+
+            background-size: cover;
+            background-position: center;
+        }
+
+
+        /* RIGHT FORM */
+
+        .form-section {
+            width: 60%;
+
+            padding: 45px;
+        }
+
+        .logo {
+            text-align: center;
+
+            color: #ff5a1f;
+
+            font-size: 38px;
+
+            margin-bottom: 5px;
+        }
+
+        .subtitle {
+            text-align: center;
+
+            color: #777;
+
+            margin-bottom: 25px;
+        }
+
+
+        .form-group {
+            margin-bottom: 16px;
+        }
+
+        label {
+            display: block;
+
+            font-weight: bold;
+
+            margin-bottom: 6px;
+
+            color: #333;
+        }
+
+        input,
+        textarea {
+            width: 100%;
+
+            padding: 11px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 7px;
+
+            font-size: 14px;
+
+            outline: none;
+        }
+
+        textarea {
+            resize: vertical;
+
+            min-height: 70px;
+        }
+
+        input:focus,
+        textarea:focus {
+            border-color: #ff5a1f;
+
+            box-shadow: 0 0 5px rgba(255, 90, 31, 0.2);
+        }
+
+
+        .signup-btn {
+            width: 100%;
+
+            padding: 13px;
+
+            border: none;
+
+            border-radius: 25px;
+
+            background-color: #ff5a1f;
+
+            color: white;
+
+            font-size: 16px;
+
+            cursor: pointer;
+
+            margin-top: 5px;
+        }
+
+        .signup-btn:hover {
+            background-color: #e64a12;
+        }
+
+
+        .signin-link {
+            text-align: center;
+
+            margin-top: 20px;
+
+            color: #777;
+        }
+
+        .signin-link a {
+            color: #ff5a1f;
+
+            text-decoration: none;
+
+            font-weight: bold;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .signup-container {
+                flex-direction: column;
+            }
+
+            .image-section {
+                width: 100%;
+                height: 200px;
+            }
+
+            .form-section {
+                width: 100%;
+                padding: 30px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="signup-container">
+
+
+        <!-- FOOD IMAGE -->
+
+        <div class="image-section">
+        </div>
+
+
+        <!-- SIGN UP FORM -->
+
+        <div class="form-section">
+
+            <h1 class="logo">
+                Meal Mate
+            </h1>
+
+            <p class="subtitle">
+                Create your account 🍽️
+            </p>
+
+
+            <form method="POST" action="/signup">
+
+                {% csrf_token %}
+
+
+                <div class="form-group">
+
+                    <label>
+                        Username
+                    </label>
+
+                    <input
+                        type="text"
+                        name="username"
+                        placeholder="Enter your username"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Password
+                    </label>
+
+                    <input
+                        type="password"
+                        name="password"
+                        placeholder="Enter your password"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Email
+                    </label>
+
+                    <input
+                        type="email"
+                        name="email"
+                        placeholder="Enter your email"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Mobile
+                    </label>
+
+                    <input
+                        type="text"
+                        name="mobile"
+                        placeholder="Enter your mobile number"
+                        maxlength="10"
+                        required
+                    >
+
+                </div>
+
+
+                <div class="form-group">
+
+                    <label>
+                        Address
+                    </label>
+
+                    <textarea
+                        name="address"
+                        placeholder="Enter your address"
+                        required
+                    ></textarea>
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    class="signup-btn"
+                >
+                    Create Account
+                </button>
+
+            </form>
+
+
+            <div class="signin-link">
+
+                Already have an account?
+
+                <a href="/open_signin/">
+                    Sign In
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

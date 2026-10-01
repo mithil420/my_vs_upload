@@ -1,0 +1,541 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Contact - Meal Mate</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+
+            font-family: Arial, sans-serif;
+
+            min-height: 100vh;
+
+            background:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.65),
+                    rgba(0, 0, 0, 0.65)
+                ),
+                url("https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=2000&q=85");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 30px;
+
+        }
+
+
+        .card {
+
+            width: 850px;
+            max-width: 95%;
+
+            background: rgba(255, 255, 255, 0.97);
+
+            border-radius: 25px;
+
+            padding: 50px;
+
+            box-shadow:
+                0 25px 60px rgba(0, 0, 0, 0.35);
+
+        }
+
+
+        .logo {
+
+            text-align: center;
+
+            font-size: 38px;
+
+            font-weight: bold;
+
+            color: #ff5722;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        h1 {
+
+            text-align: center;
+
+            color: #222;
+
+            font-size: 36px;
+
+            margin-bottom: 12px;
+
+        }
+
+
+        .subtitle {
+
+            text-align: center;
+
+            color: #777;
+
+            font-size: 15px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .contact-container {
+
+            display: flex;
+
+            gap: 30px;
+
+        }
+
+
+        .contact-info {
+
+            width: 40%;
+
+            background: #fff5f0;
+
+            border-radius: 18px;
+
+            padding: 25px;
+
+        }
+
+
+        .contact-info h2 {
+
+            color: #ff5722;
+
+            font-size: 22px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .info-item {
+
+            margin-bottom: 22px;
+
+        }
+
+
+        .info-item strong {
+
+            display: block;
+
+            color: #222;
+
+            margin-bottom: 5px;
+
+        }
+
+
+        .info-item span {
+
+            color: #666;
+
+            font-size: 14px;
+
+            line-height: 1.5;
+
+        }
+
+
+        .contact-form {
+
+            width: 60%;
+
+        }
+
+
+        .success-message {
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            padding: 14px;
+
+            border-radius: 10px;
+
+            margin-bottom: 20px;
+
+            text-align: center;
+
+            font-weight: bold;
+
+        }
+
+
+        .form-group {
+
+            margin-bottom: 17px;
+
+        }
+
+
+        label {
+
+            display: block;
+
+            color: #333;
+
+            font-size: 14px;
+
+            font-weight: bold;
+
+            margin-bottom: 7px;
+
+        }
+
+
+        input,
+        textarea {
+
+            width: 100%;
+
+            padding: 13px 15px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 10px;
+
+            font-size: 14px;
+
+            outline: none;
+
+            font-family: Arial, sans-serif;
+
+        }
+
+
+        input:focus,
+        textarea:focus {
+
+            border-color: #ff5722;
+
+        }
+
+
+        textarea {
+
+            height: 110px;
+
+            resize: none;
+
+        }
+
+
+        .send-btn {
+
+            width: 100%;
+
+            border: none;
+
+            padding: 14px;
+
+            background: #ff5722;
+
+            color: white;
+
+            border-radius: 25px;
+
+            font-size: 15px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .send-btn:hover {
+
+            background: #e64a19;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        .back-btn {
+
+            display: block;
+
+            width: fit-content;
+
+            margin: 25px auto 0;
+
+            padding: 12px 25px;
+
+            background: #222;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 25px;
+
+            font-size: 14px;
+
+        }
+
+
+        .back-btn:hover {
+
+            background: #444;
+
+        }
+
+
+        @media (max-width: 700px) {
+
+            .card {
+
+                padding: 30px 20px;
+
+            }
+
+            .contact-container {
+
+                flex-direction: column;
+
+            }
+
+            .contact-info,
+            .contact-form {
+
+                width: 100%;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <div class="card">
+
+
+        <div class="logo">
+
+            🍴 Meal Mate
+
+        </div>
+
+
+        <h1>
+
+            Contact Us
+
+        </h1>
+
+
+        <p class="subtitle">
+
+            Have a question or feedback? We'd love to hear from you.
+
+        </p>
+
+
+        <div class="contact-container">
+
+
+            <div class="contact-info">
+
+
+                <h2>
+
+                    Get in Touch
+
+                </h2>
+
+
+                <div class="info-item">
+
+                    <strong>📧 Email</strong>
+
+                    <span>
+
+                        support@mealmate.com
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>📞 Phone</strong>
+
+                    <span>
+
+                        +91 98765 43210
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>📍 Location</strong>
+
+                    <span>
+
+                        Bengaluru, Karnataka, India
+
+                    </span>
+
+                </div>
+
+
+                <div class="info-item">
+
+                    <strong>🕐 Support Hours</strong>
+
+                    <span>
+
+                        Monday – Saturday<br>
+
+                        9:00 AM – 7:00 PM
+
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="contact-form">
+
+
+                {% if success %}
+
+                    <div class="success-message">
+
+                        {{ success }}
+
+                    </div>
+
+                {% endif %}
+
+
+                <form method="POST">
+
+                    {% csrf_token %}
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Your Name
+
+                        </label>
+
+                        <input
+                            type="text"
+                            name="name"
+                            placeholder="Enter your name"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Email Address
+
+                        </label>
+
+                        <input
+                            type="email"
+                            name="email"
+                            placeholder="Enter your email"
+                            required
+                        >
+
+                    </div>
+
+
+                    <div class="form-group">
+
+                        <label>
+
+                            Message
+
+                        </label>
+
+                        <textarea
+                            name="message"
+                            placeholder="Write your message..."
+                            required
+                        ></textarea>
+
+                    </div>
+
+
+                    <button
+                        type="submit"
+                        class="send-btn"
+                    >
+
+                        Send Message →
+
+                    </button>
+
+
+                </form>
+
+
+            </div>
+
+
+        </div>
+
+
+        <a href="/" class="back-btn">
+
+            ← Back to Home
+
+        </a>
+
+
+    </div>
+
+
+</body>
+
+</html>

@@ -1,0 +1,730 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate - Discover</title>
+
+    <style>
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            color: white;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    rgba(20, 12, 8, 0.92),
+                    rgba(80, 30, 10, 0.82)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=90");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            overflow-x: hidden;
+        }
+
+        /* ================= BACKGROUND LIGHT ================= */
+
+        body::before {
+            content: "";
+            position: fixed;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            background: rgba(255, 92, 31, 0.18);
+            filter: blur(100px);
+            top: -180px;
+            left: -150px;
+            z-index: -1;
+        }
+
+        body::after {
+            content: "";
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: rgba(255, 170, 80, 0.12);
+            filter: blur(100px);
+            bottom: -150px;
+            right: -120px;
+            z-index: -1;
+        }
+
+        /* ================= NAVBAR ================= */
+
+        .navbar {
+            width: 92%;
+            max-width: 1450px;
+            margin: 25px auto;
+            padding: 18px 28px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(18px);
+
+            border: 1px solid rgba(255,255,255,0.18);
+            border-radius: 20px;
+
+            box-shadow:
+                0 10px 40px rgba(0,0,0,0.25);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: bold;
+            color: #ff6a2a;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: white;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #eeeeee;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 500;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #ff6a2a;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #ff8a4c;
+        }
+
+        /* ================= USER AREA ================= */
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .user {
+            color: #eee;
+            font-size: 14px;
+        }
+
+        .user strong {
+            color: #ff8a4c;
+        }
+
+        /* ================= CART BUTTON ================= */
+
+        .cart-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: #ff5b22;
+            padding: 10px 17px;
+            border-radius: 22px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .cart-btn:hover {
+            background: #ff713d;
+            transform: translateY(-2px);
+        }
+
+        /* ================= ORDER HISTORY BUTTON ================= */
+
+        .history-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 17px;
+            border-radius: 22px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .history-btn:hover {
+            background: #ff5b22;
+            border-color: #ff5b22;
+            transform: translateY(-2px);
+        }
+
+        /* ================= LOGOUT BUTTON ================= */
+
+        .logout-btn {
+            display: inline-block;
+            text-decoration: none;
+            color: white;
+            background: rgba(255,255,255,0.12);
+            border: 1px solid rgba(255,255,255,0.25);
+            padding: 10px 17px;
+            border-radius: 22px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5b22;
+            border-color: #ff5b22;
+            transform: translateY(-2px);
+        }
+
+        /* ================= HERO ================= */
+
+        .hero {
+            width: 92%;
+            max-width: 1450px;
+            margin: 70px auto 55px;
+            text-align: center;
+        }
+
+        .hero-small {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 30px;
+
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.20);
+
+            backdrop-filter: blur(10px);
+
+            color: #ff9a67;
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+
+        .hero h1 {
+            margin: 0;
+            font-size: clamp(45px, 6vw, 78px);
+            line-height: 1;
+            font-weight: 800;
+            letter-spacing: -3px;
+        }
+
+        .hero h1 span {
+            color: #ff6428;
+        }
+
+        .hero p {
+            max-width: 650px;
+            margin: 22px auto 0;
+            color: #ddd;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* ================= RESTAURANT SECTION ================= */
+
+        .restaurant-section {
+            width: 92%;
+            max-width: 1450px;
+            margin: auto;
+        }
+
+        .section-title {
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            margin-bottom: 25px;
+        }
+
+        .section-title h2 {
+            margin: 0;
+            font-size: 28px;
+        }
+
+        .section-title p {
+            margin: 5px 0 0;
+            color: #bbb;
+        }
+
+        /* ================= GRID ================= */
+
+        .restaurant-grid {
+            display: grid;
+            grid-template-columns: repeat(
+                auto-fit,
+                minmax(320px, 1fr)
+            );
+
+            gap: 28px;
+            padding-bottom: 50px;
+        }
+
+        /* ================= CARD ================= */
+
+        .restaurant-card {
+            position: relative;
+            overflow: hidden;
+
+            min-height: 440px;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,0.10);
+            border: 1px solid rgba(255,255,255,0.18);
+
+            backdrop-filter: blur(18px);
+
+            box-shadow:
+                0 20px 50px rgba(0,0,0,0.35);
+
+            transition:
+                transform 0.45s ease,
+                box-shadow 0.45s ease;
+
+            animation: cardAppear 0.8s ease both;
+        }
+
+        .restaurant-card:hover {
+            transform: translateY(-12px);
+
+            box-shadow:
+                0 30px 70px rgba(0,0,0,0.50);
+        }
+
+        /* ================= IMAGE ================= */
+
+        .image-container {
+            position: relative;
+            height: 245px;
+            overflow: hidden;
+        }
+
+        .restaurant-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.6s ease;
+        }
+
+        .restaurant-card:hover .restaurant-image {
+            transform: scale(1.10);
+        }
+
+        .image-container::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 100px;
+
+            background:
+                linear-gradient(
+                    transparent,
+                    rgba(0,0,0,0.75)
+                );
+        }
+
+        /* ================= RATING ================= */
+
+        .rating {
+            position: absolute;
+            top: 18px;
+            right: 18px;
+            z-index: 2;
+
+            padding: 8px 12px;
+            border-radius: 30px;
+
+            background: rgba(0,0,0,0.70);
+
+            color: #ffd43b;
+            font-weight: bold;
+
+            backdrop-filter: blur(10px);
+        }
+
+        /* ================= CARD CONTENT ================= */
+
+        .card-content {
+            padding: 24px;
+        }
+
+        .restaurant-name {
+            font-size: 25px;
+            font-weight: bold;
+            margin-bottom: 8px;
+        }
+
+        .cuisine {
+            color: #bbb;
+            font-size: 14px;
+            margin-bottom: 22px;
+        }
+
+        /* ================= MENU BUTTON ================= */
+
+        .menu-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            width: 100%;
+            padding: 14px 18px;
+
+            border-radius: 13px;
+
+            background: #ff5b22;
+            color: white;
+
+            text-decoration: none;
+            font-weight: bold;
+
+            transition: 0.3s ease;
+
+            box-shadow:
+                0 8px 20px rgba(255,91,34,0.25);
+        }
+
+        .menu-btn span:last-child {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .menu-btn:hover {
+            background: #ff713d;
+
+            box-shadow:
+                0 12px 28px rgba(255,91,34,0.40);
+        }
+
+        .menu-btn:hover span:last-child {
+            transform: translateX(6px);
+        }
+
+        /* ================= EMPTY ================= */
+
+        .empty {
+            width: 100%;
+            text-align: center;
+            padding: 70px;
+
+            border-radius: 25px;
+
+            background: rgba(255,255,255,0.10);
+            backdrop-filter: blur(15px);
+
+            color: #ddd;
+        }
+
+        /* ================= FOOTER ================= */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            color: #aaa;
+            font-size: 13px;
+        }
+
+        /* ================= ANIMATION ================= */
+
+        @keyframes cardAppear {
+
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 1000px) {
+
+            .nav-links {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 700px) {
+
+            .navbar {
+                width: 95%;
+            }
+
+            .hero {
+                margin-top: 50px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1px;
+            }
+
+            .restaurant-section {
+                width: 95%;
+            }
+
+            .section-title {
+                display: block;
+            }
+
+            .user {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 450px) {
+
+            .navbar {
+                padding: 15px;
+            }
+
+            .logo {
+                font-size: 24px;
+            }
+
+            .cart-btn,
+            .history-btn,
+            .logout-btn {
+                padding: 9px 13px;
+            }
+
+            .user-area {
+                gap: 7px;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+    <!-- ================= NAVBAR ================= -->
+
+    <div class="navbar">
+
+        <div class="logo">
+            Meal <span>Mate</span> 🍽️
+        </div>
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{% url 'about' %}">
+                About
+            </a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+        </div>
+
+        <div class="user-area">
+
+            <div class="user">
+
+                Welcome,
+
+                <strong>
+                    {{ username }}
+                </strong>
+
+            </div>
+
+            <a
+                href="{% url 'cart' username %}"
+                class="cart-btn"
+            >
+                🛒 Cart
+            </a>
+
+            <a
+                href="{% url 'order_history' username %}"
+                class="history-btn"
+            >
+                📦 Order History
+            </a>
+
+            <a
+                href="{% url 'logout' %}"
+                class="logout-btn"
+            >
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+    <!-- ================= HERO ================= -->
+
+    <section class="hero">
+
+        <div class="hero-small">
+            ✨ YOUR NEXT FAVOURITE MEAL AWAITS
+        </div>
+
+        <h1>
+            Good Food.
+            <span>
+                Good Mood.
+            </span>
+        </h1>
+
+        <p>
+            Discover amazing restaurants, explore delicious menus,
+            and enjoy your favourite food with Meal Mate.
+        </p>
+
+    </section>
+
+    <!-- ================= RESTAURANTS ================= -->
+
+    <section class="restaurant-section">
+
+        <div class="section-title">
+
+            <div>
+
+                <h2>
+                    🍴 Popular Restaurants
+                </h2>
+
+                <p>
+                    Handpicked places for your next meal
+                </p>
+
+            </div>
+
+        </div>
+
+        <div class="restaurant-grid">
+
+            {% for r in restaurantList %}
+
+            <div class="restaurant-card">
+
+                <!-- IMAGE -->
+
+                <div class="image-container">
+
+                    <img
+                        src="{{ r.picture }}"
+                        alt="{{ r.name }}"
+                        class="restaurant-image"
+                    >
+
+                    <div class="rating">
+                        ⭐ {{ r.rating }}
+                    </div>
+
+                </div>
+
+                <!-- CONTENT -->
+
+                <div class="card-content">
+
+                    <div class="restaurant-name">
+                        {{ r.name }}
+                    </div>
+
+                    <div class="cuisine">
+                        🍴 {{ r.cuisine }}
+                    </div>
+
+                    <a
+                        href="{% url 'view_menu' r.id username %}"
+                        class="menu-btn"
+                    >
+
+                        <span>
+                            Explore Menu
+                        </span>
+
+                        <span>
+                            →
+                        </span>
+
+                    </a>
+
+                </div>
+
+            </div>
+
+            {% empty %}
+
+            <div class="empty">
+
+                <h2>
+                    🍽️ No restaurants yet
+                </h2>
+
+                <p>
+                    Restaurants will appear here when they are added.
+                </p>
+
+            </div>
+
+            {% endfor %}
+
+        </div>
+
+    </section>
+
+    <!-- ================= FOOTER ================= -->
+
+    <footer>
+
+        Meal Mate © 2026
+        &nbsp; • &nbsp;
+        Made for food lovers ❤️
+
+    </footer>
+
+</body>
+
+</html>

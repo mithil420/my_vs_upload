@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate - Admin Home</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+
+            background-image:
+                linear-gradient(
+                    rgba(0, 0, 0, 0.45),
+                    rgba(0, 0, 0, 0.45)
+                ),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f");
+
+            background-size: cover;
+            background-position: center;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            padding: 30px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 900px;
+
+            background: rgba(255, 255, 255, 0.96);
+
+            border-radius: 20px;
+
+            padding: 55px;
+
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.3);
+
+            text-align: center;
+        }
+
+        .logo {
+            color: #ff5a1f;
+
+            font-size: 45px;
+
+            margin-bottom: 8px;
+        }
+
+        .welcome {
+            font-size: 25px;
+
+            color: #333;
+
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #777;
+
+            font-size: 16px;
+
+            margin-bottom: 40px;
+        }
+
+
+        /* BUTTONS */
+
+        .buttons {
+            display: flex;
+
+            justify-content: center;
+
+            gap: 25px;
+
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            width: 260px;
+
+            padding: 18px 20px;
+
+            border-radius: 12px;
+
+            text-decoration: none;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            transition: 0.3s;
+        }
+
+        .add-btn {
+            background-color: #ff5a1f;
+
+            color: white;
+        }
+
+        .add-btn:hover {
+            background-color: #e64a12;
+
+            transform: translateY(-3px);
+        }
+
+        .show-btn {
+            background-color: white;
+
+            color: #ff5a1f;
+
+            border: 2px solid #ff5a1f;
+        }
+
+        .show-btn:hover {
+            background-color: #ff5a1f;
+
+            color: white;
+
+            transform: translateY(-3px);
+        }
+
+
+        /* ADMIN CARD */
+
+        .admin-info {
+            margin-top: 40px;
+
+            padding: 20px;
+
+            background-color: #fff4ef;
+
+            border-radius: 12px;
+
+            color: #555;
+        }
+
+        .admin-info span {
+            color: #ff5a1f;
+
+            font-weight: bold;
+        }
+
+
+        /* MOBILE */
+
+        @media (max-width: 600px) {
+
+            .container {
+                padding: 35px 20px;
+            }
+
+            .logo {
+                font-size: 38px;
+            }
+
+            .welcome {
+                font-size: 21px;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+    <div class="container">
+
+        <h1 class="logo">
+            Meal Mate 🍽️
+        </h1>
+
+        <h2 class="welcome">
+            Welcome to Admin Home!
+        </h2>
+
+        <p class="subtitle">
+            Manage your restaurants and menu items easily.
+        </p>
+
+
+        <div class="buttons">
+
+            <a
+                href="/open_add_restaurant"
+                class="btn add-btn"
+            >
+                + Add New Restaurant
+            </a>
+
+
+            <a
+                href="/open_show_restaurant"
+                class="btn show-btn"
+            >
+                View Restaurants
+            </a>
+
+        </div>
+
+
+        <div class="admin-info">
+
+            <p>
+                <span>Admin Panel</span>
+                — Manage restaurants, menus and food details.
+            </p>
+
+        </div>
+
+    </div>
+
+</body>
+
+</html>

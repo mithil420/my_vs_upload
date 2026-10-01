@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Meal Mate - My Cart</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            min-height: 100vh;
+            color: #222;
+
+            background:
+                linear-gradient(rgba(255, 248, 243, 0.92),
+                    rgba(255, 243, 235, 0.92)),
+                url("https://images.unsplash.com/photo-1515003197210-e0cd71810b5f?auto=format&fit=crop&w=2000&q=90");
+
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+        }
+
+        /* ================= HEADER ================= */
+
+        .header {
+            width: 94%;
+            max-width: 1450px;
+            margin: 22px auto;
+            padding: 18px 28px;
+
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 25px;
+
+            background: rgba(255, 255, 255, 0.94);
+            border: 1px solid #eee;
+            border-radius: 18px;
+
+            box-shadow:
+                0 10px 35px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            font-size: 30px;
+            font-weight: 800;
+            color: #ff5a1f;
+            white-space: nowrap;
+        }
+
+        .logo span {
+            color: #222;
+        }
+
+        .cart-icon {
+            margin-left: 5px;
+        }
+
+        /* ================= NAVIGATION ================= */
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 28px;
+        }
+
+        .nav-links a {
+            color: #444;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            position: relative;
+            padding-bottom: 5px;
+        }
+
+        .nav-links a::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 0;
+            height: 2px;
+            background: #ff5a1f;
+            transition: 0.3s;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        .nav-links a:hover {
+            color: #ff5a1f;
+        }
+
+        /* ================= USER AREA ================= */
+
+        .user-area {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .welcome {
+            font-size: 14px;
+            color: #666;
+        }
+
+        .welcome strong {
+            color: #ff5a1f;
+        }
+
+        /* ================= LOGOUT ================= */
+
+        .logout-btn {
+            display: inline-block;
+            padding: 10px 18px;
+            background: #333;
+            color: white;
+            text-decoration: none;
+            border-radius: 22px;
+            font-size: 13px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .logout-btn:hover {
+            background: #ff5a1f;
+            transform: translateY(-2px);
+        }
+
+        /* ================= MAIN ================= */
+
+        .container {
+            width: 94%;
+            max-width: 1450px;
+            margin: 45px auto 70px;
+        }
+
+        /* ================= TITLE ================= */
+
+        .title-section {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        .title-badge {
+            display: inline-block;
+            padding: 8px 18px;
+            border-radius: 25px;
+            background: #fff0e8;
+            color: #ff5a1f;
+            font-size: 13px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .title-section h1 {
+            margin: 0;
+            font-size: 42px;
+            color: #222;
+        }
+
+        .title-section h1 span {
+            color: #ff5a1f;
+        }
+
+        .title-section p {
+            margin-top: 10px;
+            color: #777;
+            font-size: 16px;
+        }
+
+        /* ================= CART CARD ================= */
+
+        .cart-card {
+            background: rgba(255, 255, 255, 0.97);
+            border-radius: 22px;
+            overflow: hidden;
+
+            box-shadow:
+                0 20px 55px rgba(0, 0, 0, 0.10);
+
+            border: 1px solid #eee;
+        }
+
+        /* ================= TABLE ================= */
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: #382217;
+            color: white;
+            padding: 18px 12px;
+            font-size: 14px;
+            letter-spacing: 0.5px;
+        }
+
+        td {
+            padding: 22px 12px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+            font-size: 15px;
+        }
+
+        tbody tr {
+            transition: 0.25s;
+        }
+
+        tbody tr:hover {
+            background-color: #fff9f5;
+        }
+
+        tr:last-child td {
+            border-bottom: none;
+        }
+
+        /* ================= ITEM NAME ================= */
+
+        .item-name {
+            font-weight: bold;
+            font-size: 17px;
+            color: #292929;
+        }
+
+        /* ================= IMAGE ================= */
+
+        .menu-image {
+            width: 120px;
+            height: 85px;
+            object-fit: cover;
+            border-radius: 14px;
+
+            box-shadow:
+                0 5px 15px rgba(0, 0, 0, 0.15);
+
+            transition: 0.3s;
+        }
+
+        .menu-image:hover {
+            transform: scale(1.06);
+        }
+
+        .no-image {
+            width: 120px;
+            height: 85px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin: auto;
+
+            background: #f4f4f4;
+            border-radius: 14px;
+            color: #999;
+        }
+
+        /* ================= PRICE ================= */
+
+        .price {
+            font-weight: bold;
+            font-size: 17px;
+            color: #444;
+        }
+
+        /* ================= QUANTITY ================= */
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            width: 145px;
+            height: 50px;
+
+            margin: auto;
+
+            border: 1px solid #ddd;
+            border-radius: 13px;
+            background: white;
+
+            overflow: hidden;
+
+            box-shadow:
+                0 4px 12px rgba(0, 0, 0, 0.05);
+        }
+
+        .quantity-btn {
+            width: 45px;
+            height: 50px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            text-decoration: none;
+
+            color: #333;
+            font-size: 25px;
+            font-weight: bold;
+
+            transition: 0.2s;
+        }
+
+        .quantity-btn:hover {
+            background-color: #ff5a1f;
+            color: white;
+        }
+
+        .quantity {
+            min-width: 45px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* ================= ITEM TOTAL ================= */
+
+        .item-total {
+            font-weight: 800;
+            font-size: 17px;
+            color: #ff5a1f;
+        }
+
+        /* ================= REMOVE ================= */
+
+        .remove-btn {
+            display: inline-block;
+
+            padding: 9px 17px;
+
+            background: #fff0f1;
+            color: #d92f42;
+
+            border: 1px solid #ffd1d6;
+
+            text-decoration: none;
+            border-radius: 9px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .remove-btn:hover {
+            background: #ff4055;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* ================= SUMMARY ================= */
+
+        .summary {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+
+            gap: 18px;
+
+            padding: 25px 35px;
+
+            background: #fff8f4;
+
+            border-top: 1px solid #eee;
+        }
+
+        .total-label {
+            font-size: 18px;
+            color: #666;
+        }
+
+        .total-price {
+            font-size: 32px;
+            font-weight: 800;
+            color: #ff5a1f;
+        }
+
+        /* ================= BUTTONS ================= */
+
+        .bottom-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            margin-top: 25px;
+
+            gap: 15px;
+        }
+
+        .back-btn {
+            display: inline-block;
+
+            padding: 13px 22px;
+
+            background: #333;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 10px;
+
+            font-weight: bold;
+
+            transition: 0.25s;
+        }
+
+        .back-btn:hover {
+            background: #111;
+            transform: translateY(-2px);
+        }
+
+        .checkout-btn {
+            display: inline-block;
+
+            padding: 15px 30px;
+
+            background: #ff5a1f;
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 11px;
+
+            font-size: 16px;
+            font-weight: bold;
+
+            box-shadow:
+                0 8px 20px rgba(255, 90, 31, 0.25);
+
+            transition: 0.25s;
+        }
+
+        .checkout-btn:hover {
+            background: #e54812;
+            transform: translateY(-2px);
+
+            box-shadow:
+                0 12px 25px rgba(255, 90, 31, 0.35);
+        }
+
+        /* ================= EMPTY CART ================= */
+
+        .empty-cart {
+            background: rgba(255, 255, 255, 0.97);
+
+            border-radius: 22px;
+
+            padding: 85px 20px;
+
+            text-align: center;
+
+            box-shadow:
+                0 20px 50px rgba(0, 0, 0, 0.08);
+
+            border: 1px solid #eee;
+        }
+
+        .empty-cart .icon {
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        .empty-cart h2 {
+            margin-top: 10px;
+            font-size: 29px;
+            color: #222;
+        }
+
+        .empty-cart p {
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        /* ================= MOBILE ================= */
+
+        @media (max-width: 1000px) {
+
+            .nav-links {
+                display: none;
+            }
+
+        }
+
+        @media (max-width: 850px) {
+
+            .header {
+                width: 96%;
+                padding: 18px;
+            }
+
+            .logo {
+                font-size: 26px;
+            }
+
+            .user-area {
+                gap: 10px;
+            }
+
+            .welcome {
+                font-size: 13px;
+            }
+
+            .logout-btn {
+                padding: 9px 14px;
+            }
+
+            .container {
+                width: 98%;
+            }
+
+            .title-section h1 {
+                font-size: 31px;
+            }
+
+            .cart-card {
+                overflow-x: auto;
+            }
+
+            table {
+                min-width: 900px;
+            }
+
+            .bottom-buttons {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .back-btn,
+            .checkout-btn {
+                text-align: center;
+            }
+
+        }
+
+        @media (max-width: 500px) {
+
+            .header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .title-section {
+                margin-top: 25px;
+            }
+
+        }
+    </style>
+
+</head>
+
+
+<body>
+
+
+    <!-- ================= HEADER ================= -->
+
+    <div class="header">
+
+        <div class="logo">
+
+            Meal <span>Mate</span>
+
+            <span class="cart-icon">
+                🛒
+            </span>
+
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="/">
+                Home
+            </a>
+
+            <a href="{% url 'about' %}">
+                About
+            </a>
+
+            <a href="{% url 'contact' %}">
+                Contact
+            </a>
+
+            <a href="{% url 'cart' username %}">
+                🛒 Cart
+            </a>
+
+        </div>
+
+
+        <div class="user-area">
+
+            <div class="welcome">
+
+                Welcome,
+
+                <strong>
+                    {{ username }}
+                </strong>
+
+            </div>
+
+
+            <a href="{% url 'logout' %}" class="logout-btn">
+                Logout
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= MAIN ================= -->
+
+    <div class="container">
+
+
+        <!-- ================= TITLE ================= -->
+
+        <div class="title-section">
+
+            <div class="title-badge">
+
+                🛒 YOUR FOOD IS WAITING
+
+            </div>
+
+
+            <h1>
+
+                Your <span>Cart</span>
+
+            </h1>
+
+
+            <p>
+
+                Review your delicious choices before ordering 🍕
+
+            </p>
+
+        </div>
+
+
+        {% if menuList %}
+
+
+        <!-- ================= CART ================= -->
+
+        <div class="cart-card">
+
+            <table>
+
+                <thead>
+
+                    <tr>
+
+                        <th>
+                            Item
+                        </th>
+
+                        <th>
+                            Picture
+                        </th>
+
+                        <th>
+                            Price
+                        </th>
+
+                        <th>
+                            Quantity
+                        </th>
+
+                        <th>
+                            Item Total
+                        </th>
+
+                        <th>
+                            Operation
+                        </th>
+
+                    </tr>
+
+                </thead>
+
+
+                <tbody>
+
+                    {% for item in menuList %}
+
+                    <tr>
+
+                        <td>
+
+                            <div class="item-name">
+
+                                {{ item.menu.food_name }}
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            {% if item.menu.picture %}
+
+                            <img src="{{ item.menu.picture }}" alt="{{ item.menu.food_name }}" class="menu-image">
+
+                            {% else %}
+
+                            <div class="no-image">
+
+                                🍽️ No Image
+
+                            </div>
+
+                            {% endif %}
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="price">
+
+                                ₹{{ item.menu.price }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <div class="quantity-control">
+
+                                <a href="{% url 'decrease_cart' item.menu.id username %}" class="quantity-btn">
+                                    −
+                                </a>
+
+
+                                <span class="quantity">
+
+                                    {{ item.quantity }}
+
+                                </span>
+
+
+                                <a href="{% url 'increase_cart' item.menu.id username %}" class="quantity-btn">
+                                    +
+                                </a>
+
+                            </div>
+
+                        </td>
+
+
+                        <td>
+
+                            <span class="item-total">
+
+                                ₹{{ item.item_total }}
+
+                            </span>
+
+                        </td>
+
+
+                        <td>
+
+                            <a href="{% url 'remove_from_cart' item.menu.id username %}" class="remove-btn">
+
+                                Remove
+
+                            </a>
+
+                        </td>
+
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+
+
+            <!-- ================= TOTAL ================= -->
+
+            <div class="summary">
+
+                <span class="total-label">
+
+                    Grand Total:
+
+                </span>
+
+
+                <span class="total-price">
+
+                    ₹{{ total }}
+
+                </span>
+
+            </div>
+
+        </div>
+
+
+        <!-- ================= BOTTOM BUTTONS ================= -->
+
+        <div class="bottom-buttons">
+
+            <a href="/" class="back-btn">
+
+                ← Continue Shopping
+
+            </a>
+
+
+            <!-- CHECKOUT BUTTON -->
+
+            <a href="{% url 'checkout' username %}" class="checkout-btn">
+
+                Proceed to Checkout →
+
+            </a>
+
+        </div>
+
+
+        {% else %}
+
+
+        <!-- ================= EMPTY CART ================= -->
+
+        <div class="empty-cart">
+
+            <div class="icon">
+
+                🛒
+
+            </div>
+
+
+            <h2>
+
+                Your cart is empty
+
+            </h2>
+
+
+            <p>
+
+                Looks like you haven't added anything delicious yet.
+
+            </p>
+
+
+            <a href="/" class="checkout-btn">
+
+                🍕 Explore Restaurants
+
+            </a>
+
+        </div>
+
+
+        {% endif %}
+
+
+    </div>
+
+
+</body>
+
+</html>
